@@ -21,7 +21,7 @@
     [super viewDidLoad];
     
     // PREPARE PAGES
-    NSUInteger numberOfPages = 10;
+    NSUInteger numberOfPages = 3;
     viewControllerArray = [[NSMutableArray alloc] initWithCapacity:numberOfPages];
     for (NSUInteger k = 0; k < numberOfPages; ++k) {
         [viewControllerArray addObject:[NSNull null]];
