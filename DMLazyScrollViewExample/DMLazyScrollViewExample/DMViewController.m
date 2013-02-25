@@ -45,6 +45,7 @@
     lazyScrollView.numberOfPages = numberOfPages;
    // lazyScrollView.controlDelegate = self;
     [self.view addSubview:lazyScrollView];
+    [lazyScrollView setPage:1 animated:NO];
 }
 
 - (UIViewController *) controllerAtIndex:(NSInteger) index

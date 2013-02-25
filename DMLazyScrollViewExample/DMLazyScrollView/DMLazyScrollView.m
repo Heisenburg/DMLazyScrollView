@@ -233,7 +233,7 @@ enum {
 
 }
 
-- (void)moveByPages:(NSInteger) offset animated:(BOOL) animated
+- (void)moveByPages:(NSInteger)offset animated:(BOOL)animated
 {
     NSUInteger finalIndex = [self pageIndexByAdding:offset from:self.currentPage];
     DMLazyScrollViewTransition transition = (offset >= 0 ?  DMLazyScrollViewTransitionForward :
@@ -241,12 +241,12 @@ enum {
     [self setPage:finalIndex transition:transition animated:animated];
 }
 
-- (void)setPage:(NSInteger) newIndex animated:(BOOL) animated
+- (void)setPage:(NSInteger)newIndex animated:(BOOL)animated
 {
     [self setPage:newIndex transition:DMLazyScrollViewTransitionForward animated:animated];
 }
 
-- (void)setPage:(NSInteger) newIndex transition:(DMLazyScrollViewTransition) transition animated:(BOOL) animated
+- (void)setPage:(NSInteger)newIndex transition:(DMLazyScrollViewTransition)transition animated:(BOOL)animated
 {
     if (newIndex == currentPage) return;
     
@@ -290,7 +290,7 @@ enum {
     }
 }
 
-- (void) setCurrentPage:(NSUInteger)newCurrentPage
+- (void)setCurrentPage:(NSUInteger)newCurrentPage
 {
     [self setCurrentViewController:newCurrentPage];
 }

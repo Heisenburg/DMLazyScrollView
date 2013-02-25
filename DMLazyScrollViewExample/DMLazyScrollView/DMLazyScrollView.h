@@ -50,10 +50,10 @@ typedef UIViewController*(^DMLazyScrollViewDataSource)(NSUInteger index);
 
 - (void) reloadData;
 
-- (void) setPage:(NSInteger) index animated:(BOOL) animated;
-- (void) setPage:(NSInteger) newIndex transition:(DMLazyScrollViewTransition) transition animated:(BOOL) animated;
-- (void) moveByPages:(NSInteger) offset animated:(BOOL) animated;
+- (void)setPage:(NSInteger)index animated:(BOOL)animated;
+- (void)setPage:(NSInteger)newIndex transition:(DMLazyScrollViewTransition)transition animated:(BOOL)animated;
+- (void)moveByPages:(NSInteger)offset animated:(BOOL)animated;
 
-- (UIViewController *) visibleViewController;
+- (UIViewController *)visibleViewController;
 
 @end
