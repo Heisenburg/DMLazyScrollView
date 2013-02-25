@@ -46,14 +46,6 @@
     if (res == [NSNull null]) {
         UIViewController *contr = [[UIViewController alloc] init];
         
-        
-        UILabel* label = [[UILabel alloc] initWithFrame:contr.view.bounds];
-        label.backgroundColor = [UIColor clearColor];
-        label.text = [NSString stringWithFormat:@"%d",index];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.font = [UIFont boldSystemFontOfSize:50];
-        [contr.view addSubview:label];
-        
         [viewControllerArray replaceObjectAtIndex:index withObject:contr];
         return contr;
     }
