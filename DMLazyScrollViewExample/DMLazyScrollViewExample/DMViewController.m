@@ -35,7 +35,7 @@
     }
     
     // PREPARE LAZY VIEW
-    CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-50);
+    CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     lazyScrollView = [[DMLazyScrollView alloc] initWithFrame:rect];
     
     __weak __typeof(&*self)weakSelf = self;
