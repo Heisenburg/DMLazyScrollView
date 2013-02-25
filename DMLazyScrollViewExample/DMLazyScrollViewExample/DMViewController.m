@@ -58,21 +58,6 @@
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
-- (void) btn_moveBack:(id) sender {
-    [lazyScrollView moveByPages:-3 animated:YES];
-}
-
-- (void) btn_moveForward:(id) sender {
-    [lazyScrollView moveByPages:3 animated:YES];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-    
-    
-}
-
 - (UIViewController *) controllerAtIndex:(NSInteger) index {
     if (index > viewControllerArray.count || index < 0) return nil;
     id res = [viewControllerArray objectAtIndex:index];
