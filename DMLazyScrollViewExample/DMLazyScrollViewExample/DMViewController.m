@@ -9,9 +9,6 @@
 #import "DMViewController.h"
 #import "DMLazyScrollView.h"
 
-#define ARC4RANDOM_MAX	0x100000000
-
-
 @interface DMViewController () <DMLazyScrollViewDelegate> {
     DMLazyScrollView* lazyScrollView;
     NSMutableArray*    viewControllerArray;
@@ -41,21 +38,6 @@
     lazyScrollView.numberOfPages = numberOfPages;
    // lazyScrollView.controlDelegate = self;
     [self.view addSubview:lazyScrollView];
-    
-    // MOVE BY 3 FORWARD
-    UIButton*btn_moveForward = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [btn_moveForward setTitle:@"MOVE BY 3" forState:UIControlStateNormal];
-    [btn_moveForward addTarget:self action:@selector(btn_moveForward:) forControlEvents:UIControlEventTouchUpInside];
-    [btn_moveForward setFrame:CGRectMake(self.view.frame.size.width/2.0f,lazyScrollView.frame.origin.y+lazyScrollView.frame.size.height+5, 320/2.0f,40)];
-    [self.view addSubview:btn_moveForward];
-    
-    // MOVE BY -3 BACKWARD
-    UIButton*btn_moveBackward = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [btn_moveBackward setTitle:@"MOVE BY -3" forState:UIControlStateNormal];
-    [btn_moveBackward addTarget:self action:@selector(btn_moveBack:) forControlEvents:UIControlEventTouchUpInside];
-    [btn_moveBackward setFrame:CGRectMake(0,lazyScrollView.frame.origin.y+lazyScrollView.frame.size.height+5, 320/2.0f,40)];
-    [self.view addSubview:btn_moveBackward];
-	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (UIViewController *) controllerAtIndex:(NSInteger) index {
@@ -63,10 +45,7 @@
     id res = [viewControllerArray objectAtIndex:index];
     if (res == [NSNull null]) {
         UIViewController *contr = [[UIViewController alloc] init];
-        contr.view.backgroundColor = [UIColor colorWithRed: (CGFloat)arc4random()/ARC4RANDOM_MAX
-                                                      green: (CGFloat)arc4random()/ARC4RANDOM_MAX
-                                                       blue: (CGFloat)arc4random()/ARC4RANDOM_MAX
-                                                     alpha: 1.0f];
+        
         
         UILabel* label = [[UILabel alloc] initWithFrame:contr.view.bounds];
         label.backgroundColor = [UIColor clearColor];
