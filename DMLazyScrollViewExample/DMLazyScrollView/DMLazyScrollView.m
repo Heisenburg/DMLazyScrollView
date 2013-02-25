@@ -30,7 +30,8 @@ enum {
 @synthesize numberOfPages,currentPage;
 @synthesize dataSource,controlDelegate;
 
-- (id)init {
+- (id)init
+{
     return [self initWithFrame:CGRectZero];
 }
 
@@ -41,8 +42,8 @@ enum {
 
 - (id)initWithFrameAndDirection:(CGRect)frame
                       direction:(DMLazyScrollViewDirection)direction
-                 circularScroll:(BOOL) circularScrolling {
-    
+                 circularScroll:(BOOL) circularScrolling
+{    
     self = [super initWithFrame:frame];
     if (self) {
         _direction = direction;
@@ -51,11 +52,13 @@ enum {
     return self;
 }
 
-- (void) awakeFromNib {
+- (void)awakeFromNib
+{
     [self initializeControl];
 }
 
-- (void) initializeControl {
+- (void)initializeControl
+{
     self.showsHorizontalScrollIndicator = NO;
     self.showsVerticalScrollIndicator = NO;
     self.pagingEnabled = YES;
@@ -72,29 +75,34 @@ enum {
     currentPage = NSNotFound;
 }
 
-- (void) setNumberOfPages:(NSUInteger)pages {
+- (void)setNumberOfPages:(NSUInteger)pages
+{
     if (pages != numberOfPages) {
         numberOfPages = pages;
         [self reloadData];
     }
 }
 
-- (void) reloadData {
-    [self setCurrentViewController:0];
+- (void)reloadData
+{
+    [self setCurrentViewController:1];
 }
 
-- (void) layoutSubviews {
+- (void)layoutSubviews
+{
     [super layoutSubviews];
 }
 
-- (CGRect) visibleRect {
+- (CGRect)visibleRect
+{
     CGRect visibleRect;
     visibleRect.origin = self.contentOffset;
     visibleRect.size = self.bounds.size;
     return visibleRect;
 }
 
-- (CGPoint) createPoint:(CGFloat) size {
+- (CGPoint)createPoint:(CGFloat)size
+{
     if (_direction == DMLazyScrollViewDirectionHorizontal) {
         return CGPointMake(size, 0);
     } else {
@@ -102,19 +110,22 @@ enum {
     }
 }
 
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
     self.bounces = YES;
     if (nil != controlDelegate && [controlDelegate respondsToSelector:@selector(lazyScrollViewDidEndDragging:)])
         [controlDelegate lazyScrollViewDidEndDragging:self];
 }
 
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
     if (nil != controlDelegate && [controlDelegate respondsToSelector:@selector(lazyScrollViewWillBeginDragging:)])
         [controlDelegate lazyScrollViewWillBeginDragging:self];
 }
 
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
     if (isManualAnimating) return;
     
     CGFloat offset = (_direction==DMLazyScrollViewDirectionHorizontal) ? scrollView.contentOffset.x : scrollView.contentOffset.y;
@@ -162,7 +173,8 @@ enum {
         [controlDelegate lazyScrollViewDidScroll:self at:[self visibleRect].origin];
 }
 
-- (void) setCurrentViewController:(NSInteger) index {
+- (void)setCurrentViewController:(NSInteger)index
+{
     if (index == currentPage) return;
     currentPage = index;
     
@@ -183,7 +195,8 @@ enum {
         [self.controlDelegate lazyScrollView:self currentPageChanged:self.currentPage];
 }
 
-- (UIViewController *) visibleViewController {
+- (UIViewController *)visibleViewController
+{
     __block UIView *visibleView = nil;
     [self.subviews enumerateObjectsUsingBlock:^(UIView *subView, NSUInteger idx, BOOL *stop) {
         if (CGRectIntersectsRect([self visibleRect], subView.frame)) {
@@ -195,11 +208,13 @@ enum {
     return [self viewControllerFromView:visibleView];
 }
 
-- (UIViewController *) viewControllerFromView:(UIView*) targetView {
+- (UIViewController *)viewControllerFromView:(UIView *)targetView
+{
     return (UIViewController *)[self traverseResponderChainForUIViewController:targetView];
 }
 
-- (id) traverseResponderChainForUIViewController:(UIView *) targetView {
+- (id)traverseResponderChainForUIViewController:(UIView *)targetView
+{
     id nextResponder = [targetView nextResponder];
     if ([nextResponder isKindOfClass:[UIViewController class]]) {
         return nextResponder;
@@ -210,25 +225,29 @@ enum {
     }
 }
 
-- (NSInteger) pageIndexByAdding:(NSInteger) offset from:(NSInteger) index {
+- (NSInteger)pageIndexByAdding:(NSInteger)offset from:(NSInteger)index
+{
     // Complicated stuff with negative modulo
     while (offset<0) offset += numberOfPages;
     return (numberOfPages+index+offset) % numberOfPages;
 
 }
 
-- (void) moveByPages:(NSInteger) offset animated:(BOOL) animated {
+- (void)moveByPages:(NSInteger) offset animated:(BOOL) animated
+{
     NSUInteger finalIndex = [self pageIndexByAdding:offset from:self.currentPage];
     DMLazyScrollViewTransition transition = (offset >= 0 ?  DMLazyScrollViewTransitionForward :
                                              DMLazyScrollViewTransitionBackward);
     [self setPage:finalIndex transition:transition animated:animated];
 }
 
-- (void) setPage:(NSInteger) newIndex animated:(BOOL) animated {
+- (void)setPage:(NSInteger) newIndex animated:(BOOL) animated
+{
     [self setPage:newIndex transition:DMLazyScrollViewTransitionForward animated:animated];
 }
 
-- (void) setPage:(NSInteger) newIndex transition:(DMLazyScrollViewTransition) transition animated:(BOOL) animated {
+- (void)setPage:(NSInteger) newIndex transition:(DMLazyScrollViewTransition) transition animated:(BOOL) animated
+{
     if (newIndex == currentPage) return;
     
     if (animated) {
@@ -271,11 +290,13 @@ enum {
     }
 }
 
-- (void) setCurrentPage:(NSUInteger)newCurrentPage {
+- (void) setCurrentPage:(NSUInteger)newCurrentPage
+{
     [self setCurrentViewController:newCurrentPage];
 }
 
-- (UIViewController *) loadControllerAtIndex:(NSInteger) index andPlaceAtIndex:(NSInteger) destIndex {
+- (UIViewController *)loadControllerAtIndex:(NSInteger)index andPlaceAtIndex:(NSInteger)destIndex
+{
     UIViewController *viewController = dataSource(index);
     viewController.view.tag = 0;
     
@@ -296,12 +317,14 @@ enum {
 }
 
 
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
     if (nil != controlDelegate && [controlDelegate respondsToSelector:@selector(lazyScrollViewWillBeginDecelerating:)])
         [controlDelegate lazyScrollViewWillBeginDecelerating:self];
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
     if (nil != controlDelegate && [controlDelegate respondsToSelector:@selector(lazyScrollViewDidEndDecelerating:atPageIndex:)])
         [controlDelegate lazyScrollViewDidEndDecelerating:self atPageIndex:self.currentPage];
 }
